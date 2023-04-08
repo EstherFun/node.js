@@ -8,8 +8,29 @@ const app = express();
 
 const PORT = 3000;
 
+const json = {
+        "name": "Caleb Curry",
+        "industry": "Music",
+        "favourite colours": [
+            "Red", "Blue", "Green"
+        ],
+        "favourite numbers": [
+            4, 6, 8
+        ],
+        "favourite people": [{
+                "name": "mom",
+                "relationship": "parent"
+            },
+            {
+                "name": "dad",
+                "relationship": "parent"
+            }
+        ]
+    
+};
+
 app.get('/', (req, res) => {
-    res.send('Welcome!');
+    res.send({"data": json});
 });
 app.post('/', (req, res) => {
     res.send('This is a post request!');
@@ -18,14 +39,7 @@ app.listen(PORT, () => {
     console.log('App listening on port ' + PORT);
 });
 
-/*const customers = [
-    {
-        "name": "Caleb",
-        "industry": "music"
-    }
-];
-
-
+/*
 app.get('/api/customers', (req, res) => {
     res.send({"customers": customers});
 });
