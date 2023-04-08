@@ -11,7 +11,9 @@ const PORT = 3000;
 app.get('/', (req, res) => {
     res.send('Welcome!');
 });
-
+app.post('/', (req, res) => {
+    res.send('This is a post request!');
+});
 app.listen(PORT, () => {
     console.log('App listening on port ' + PORT);
 });
@@ -31,9 +33,7 @@ app.post('/api/customers', (req, res) => {
     console.log(req, res);
     res.send(req.body);
 });
-app.post('/', (req, res) => {
-    res.send('This is a post request!');
-});
+
 
 const start = async() => {
     await mongoose.connect('mongodb+srv://EstherF:ecIPPDfSqcw8AKoF@cluster0.om2uzah.mongodb.net/?retryWrites=true&w=majority');
