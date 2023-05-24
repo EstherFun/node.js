@@ -1,0 +1,337 @@
+<!--The code provided is an HTML document resembling a lesson management system for student-tutor interactions. 
+The code begins by declaring an HTML document with the!DOCTYPE html> tag.
+The title of the document and the CSS styles for formatting the content are both found in the head> section.
+The primary material of the document is contained in the 
+body> section.
+There is an if statement inside the body> that uses 
+server-side templating syntax (% if (message) %>... % %>) to show a message if it exists.
+The lesson management system's title is displayed in the header h1>.
+The form> element collects and submits user input. It features sections for recording student information, supplementary personal information, instructor information, and tutorial session information.
+The form collects data using various input> and select> elements such as text, date, time, and dropdown menu selections.
+To handle dynamic behaviour in the form, JavaScript functions are placed within script> tags. There are functions, for example, to change the display of specific fields based on user selections.
+There is a hidden input box at the end of the code with the name _method and the value POST. In web frameworks, this is typically used to set the HTTP method for form submissions.
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student-Tutor Tutorial Management System</title>
+  <style>
+    body {
+      background-color: #E6E3CB; 
+      font-family: Arial, sans-serif; 
+    }
+    h1 {
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      border-top: 2px solid #3e3a3a; /* Add a border on top of the h1 element */
+      padding-top: 10px; /* Add some padding to create space between the border and text */
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .form-container {
+      text-align: center; /* Center align the form details */
+    }
+    .form-group {
+      text-align: center;
+      
+    }
+    form {
+      margin-bottom: 16px;
+    }
+    .center-align {
+      text-align: center;
+    }
+    .form-group textarea {
+    width: 100%;
+    resize: vertical; /* Allow vertical resizing of the textarea */
+  }
+  .message {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+  </style>
+</head>
+<body>
+  <% if (message) { %>
+    <p class="message"><%= message %></p>
+  <% } %>
+
+  <h1>Tutorial Management System</h1>
+
+  <form action="/" method="POST">
+  <h2>Student Information</h2>
+  <div class="form-container">
+      <div class="form-group">
+          <label for="title">Title:</label>
+          <select id="title" name="title" required>
+            <option value="Mx">Mx</option>
+            <option value="Ms">Ms</option>
+            <option value="Mr">Mr</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Miss">Miss</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name(s):</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-line">
+          <label for="surname">Surname:</label>
+          <input type="text" id="surname" name="surname" required>
+        </div>
+      <div class="form-group">
+        <div class="form-line">
+          <label for="phoneNumber">Phone Number:</label>
+          <input type="tel" id="phoneNumber" name="phoneNumber" required>
+        </div>
+        <div class="form-line">
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-line">
+          <label for="addressLine1">Address Line 1:</label>
+          <input type="text" id="addressLine1" name="addressLine1" required>
+        </div>
+        <div class="form-line">
+          <label for="addressLine2">Address Line 2:</label>
+          <input type="text" id="addressLine2" name="addressLine2">
+        </div>
+        <div class="form-line">
+          <label for="town">Town:</label>
+          <input type="text" id="town" name="town" required>
+        </div>
+        <div class="form-line">
+          <label for="county">County/City:</label>
+          <input type="text" id="county" name="county" required>
+        </div>
+        <div class="form-line">
+          <label for="eircode">EIRCODE:</label>
+          <input type="text" id="eircode" name="eircode" required>
+        </div>
+      </div>
+
+  <h2>Additional Personal Details For Students</h2>
+  <div class="form-container">
+      <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+        <br> <!-- Add a break after the Date of Birth field -->
+      </div>
+      <div id="parentDetails" style="display: none;">
+        <label for="parentName">Parent/Guardian Name (if under 18):</label>
+        <input type="text" id="parentName" name="parentName" required>
+        <br> <!-- Add a break after the Parent/Guardian Name field -->
+
+        <label for="virtualAttendance">Permission to attend virtually:</label>
+        <select id="virtualAttendance" name="virtualAttendance">
+          <option value="Y">Yes</option>
+          <option value="N">No</option>
+        </select>
+        <br> <!-- Add a break after the Permission to attend virtually field -->
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" onchange="toggleOtherGender()">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" id="otherGender" name="otherGender" placeholder="Specify other gender" style="display: none;">
+        <br> <!-- Add a break after the Gender field -->
+      </div>
+      <div class="form-group">
+        <label for="subject">Subject:</label>
+        <select id="subject" name="subject" onchange="toggleOtherSubject()">
+          <option value="English">English</option>
+          <option value="Irish">Irish</option>
+          <option value="Maths">Maths</option>
+          <option value="Biology">Biology</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Physics">Physics</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Other">Other</option>
+        </select>
+        <div id="otherSubjectContainer" style="display: none;">
+          <input type="text" id="otherSubject" name="otherSubject" placeholder="Specify other subject">
+        </div>
+      </div>
+    </div>
+    <h2>Tutor Information</h2>
+    <div class="form-container">
+      <div class="form-group">
+        <label for="tutorTitle">Title:</label>
+        <select id="tutorTitle" name="tutorTitle" required>
+          <option value="Mx">Mx</option>
+          <option value="Ms">Ms</option>
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Miss">Miss</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tutorFirstName">First Name(s):</label>
+        <input type="text" id="tutorFirstName" name="tutorFirstName" required>
+      </div>
+      <div class="form-line">
+        <label for="tutorSurname">Surname:</label>
+        <input type="text" id="tutorSurname" name="tutorSurname" required>
+      </div>
+      <div class="form-group">
+        <div class="form-line">
+          <label for="tutorPhoneNumber">Phone Number:</label>
+          <input type="tel" id="tutorPhoneNumber" name="tutorPhoneNumber" required>
+        </div>
+        <div class="form-line">
+          <label for="tutorEmail">Email Address:</label>
+          <input type="email" id="tutorEmail" name="tutorEmail" required>
+        </div>
+        <div class="form-line">
+          <label for="tutorAddressLine1">Address Line 1:</label>
+          <input type="text" id="tutorAddressLine1" name="tutorAddressLine1" required>
+        </div>
+        <div class="form-line">
+          <label for="tutorAddressLine2">Address Line 2:</label>
+          <input type="text" id="tutorAddressLine2" name="tutorAddressLine2">
+        </div>
+        <div class="form-line">
+          <label for="tutorTown">Town:</label>
+          <input type="text" id="tutorTown" name="tutorTown" required>
+        </div>
+        <div class="form-line">
+          <label for="tutorCounty">County/City:</label>
+          <input type="text" id="tutorCounty" name="tutorCounty" required>
+        </div>
+        <div class="form-line">
+          <label for="tutorEircode">EIRCODE:</label>
+          <input type="text" id="tutorEircode" name="tutorEircode" required>
+        </div>
+      </div>
+    </div>
+
+
+  <h2>Tutorial Session Details</h2>
+  
+  <div class="form-group">
+    <label for="tutorialDate">Tutorial Date:</label>
+    <input type="date" id="tutorialDate" name="tutorialDate" required>
+  </div>
+  <div class="form-group">
+    <label for="tutorialTime">Tutorial Time:</label>
+    <input type="time" id="tutorialTime" name="tutorialTime" required>
+  </div>
+  <div class="form-group">
+    <label for="students">Students:</label>
+    <input type="text" id="students" name="students" required>
+  </div>
+  <div class="form-group">
+    <label for="tutor">Tutor:</label>
+    <input type="text" id="tutor" name="tutor" required>
+  </div>
+  <div class="form-group">
+    <label for="fee">Fee (€):</label>
+    <input type="number" id="fee" name="fee" required>
+  </div>
+  <div class="form-group">
+    <label for="tutorialNumber">Tutorial Number:</label>
+    <input type="number" id="tutorialNumber" name="tutorialNumber" required>
+  </div>
+  <div class="form-group">
+    <label for="tutorialAttendance">Tutorial Attendance:</label>
+    <select id="tutorialAttendance" name="tutorialAttendance" required>
+      <option value="Attended">Attended</option>
+      <option value="Cancelled">Cancelled</option>
+      <option value="No Show">No Show</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="tutorialSubject">Tutorial Subject:</label>
+    <select id="tutorialSubject" name="tutorialSubject" onchange="toggleOtherTutorialSubject()">
+      <option value="English">English</option>
+      <option value="Irish">Irish</option>
+      <option value="Maths">Maths</option>
+      <option value="Biology">Biology</option>
+      <option value="Chemistry">Chemistry</option>
+      <option value="Physics">Physics</option>
+      <option value="Computer Science">Computer Science</option>
+      <option value="Other">Other</option>
+    </select>
+    <div id="otherTutorialSubjectContainer" style="display: none;">
+      <input type="text" id="otherTutorialSubject" name="otherTutorialSubject" placeholder="Specify other subject">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="tutorialNotes">Tutorial Notes:</label>
+    <textarea id="tutorialNotes" name="tutorialNotes" rows="4"></textarea>
+  </div>
+  <button type="submit" name="submitButton">Submit</button>
+</div>
+  <input type="hidden" name="_method" value="POST">
+</form>
+  <script>
+    function toggleOtherGender() {
+      const genderSelect = document.getElementById("gender");
+      const otherGenderInput = document.getElementById("otherGender");
+
+      if (genderSelect.value === "Other") {
+        otherGenderInput.style.display = "block";
+      } else {
+        otherGenderInput.style.display = "none";
+      }
+    }
+
+    function toggleOtherTutorialSubject() {
+      const tutorialSubjectSelect = document.getElementById("tutorialSubject");
+      const otherTutorialSubjectContainer = document.getElementById("otherTutorialSubjectContainer");
+
+      if (tutorialSubjectSelect.value === "Other") {
+        otherTutorialSubjectContainer.style.display = "block";
+      } else {
+        otherTutorialSubjectContainer.style.display = "none";
+      }
+    }
+  
+  function toggleOtherSubject() {
+    const subjectSelect = document.getElementById("subject");
+    const otherSubjectContainer = document.getElementById("otherSubjectContainer");
+
+    if (subjectSelect.value === "Other") {
+      otherSubjectContainer.style.display = "block";
+    } else {
+      otherSubjectContainer.style.display = "none";
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", function() {
+      const dateOfBirthInput = document.getElementById("dateOfBirth");
+      const parentDetails = document.getElementById("parentDetails");
+
+      dateOfBirthInput.addEventListener("input", function() {
+        const dob = new Date(this.value);
+        const today = new Date();
+        const age = today.getFullYear() - dob.getFullYear();
+
+        if (age >= 18) {
+          parentDetails.style.display = "none";
+        } else {
+          parentDetails.style.display = "block";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
